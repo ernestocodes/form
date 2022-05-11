@@ -8,17 +8,21 @@ const Form = () => {
     const [confirm, setConfirm] = useState("");
     const [hasBeenSubmitted, setHasBeenSubmitted] = useState(false);
 
-    const [firstNameError, setFirstNameError] = useState("");
-    const [lastNameError, setLastNameError] = useState("");
-    const [emailError, setEmailError] = useState("");
-    const [passwordError, setPasswordError] = useState("");
-    const [confirmError, setConfirmError] = useState("");
+    const [firstNameError, setFirstNameError] = useState(true);
+    const [lastNameError, setLastNameError] = useState(true);
+    const [emailError, setEmailError] = useState(true);
+    const [passwordError, setPasswordError] = useState(true);
+    const [confirmError, setConfirmError] = useState(true);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const newUser = { firstName, lastName, email, password, confirm };
-        console.log(newUser);
-        setHasBeenSubmitted(true);
+        if (!firstNameError && !lastNameError  && !emailError && !passwordError && !confirmError) {
+            const newUser = { firstName, lastName, email, password, confirm };
+            console.log(newUser);
+            setHasBeenSubmitted(true);
+        } else{
+            alert("Error")
+        }
     }
 
     const handleFirstName = (e) => {
@@ -99,7 +103,7 @@ const Form = () => {
                     <input name="confirm" type="password" onChange={handleConfirm} value={confirm} />
                     {confirmError && <p>{confirmError}</p>}
                 </div>
-                <button>Submit</button>
+                <button disabled={firstNameError || lastNameError || emailError || passwordError || confirmError}>Submit</button>
             </form>
 
             <div>
